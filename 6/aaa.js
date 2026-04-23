@@ -5875,7 +5875,7 @@ function Top(q1,q2,q3,q4,q5) {
                           results.push(`無(${target})`);
                     }
         });
-        console.log(results.join(", "));
+        document.write(results.join(", "));
 }
 function TT(x){
        var xz= Array(40).fill(0);
