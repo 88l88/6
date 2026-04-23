@@ -5844,6 +5844,12 @@ var aaa=[
 ["2007-01-02(二)",["02","12","33","36","37"],"096002",["33","02","37","12","36"]],
 ["2007-01-01(一)",["09","11","27","28","38"],"096001",["27","38","09","11","28"]]
 ];
+function TT(x){
+       var xz= Array(40).fill(0);
+       aaa.slice(0, x).map(r =>r[1].map(n => xz[Number(n)]++));
+       return xz.slice(1,40);
+}
+
 function Top(q1,q2,q3,q4,q5) {
         if (typeof aaa === 'undefined') return;
         qs = [q1, q2, q3, q4, q5];
@@ -5875,3 +5881,4 @@ function Top(q1,q2,q3,q4,q5) {
         });
         console.log(results.join(", "));
 }
+
