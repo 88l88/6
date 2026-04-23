@@ -5873,5 +5873,6 @@ function myTop(q1,q2,q3,q4,q5) {
                           results.push(`無(${target})`);
                     }
         });
-       document.write(results.join(", "));
+       //document.write(results.join(", "));
+       console.log(results.join(", "));
 }
