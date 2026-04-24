@@ -5868,39 +5868,51 @@ function one(nums) {
         }
     });
 }
-function Top(q1,q2,q3,q4,q5){
-        if (typeof aaa === 'undefined') return;
-        qs = [q1, q2, q3, q4, q5];
-        let results = [];
-        qs.forEach(q => {
-                   let target = q.toString().padStart(2, '0');
-                   let stats = {};
-                   for(let n=1; n<=39; n++) stats[n.toString().padStart(2, '0')] = 0;
-                   for(let i = 1; i < aaa.length; i++){
-                         if(aaa[i][1].includes(target)){
-                             aaa[i-1][1].forEach(num => { if(stats[num] !== undefined) stats[num]++; });
-                          }
-                    }
-                   let maxCount = -1;
-                   let topNum = "";
-                   for(let n in stats){
-                         if(stats[n] > maxCount){
-                               maxCount = stats[n];
-                               topNum = n;
-                         }else if(stats[n] === maxCount && maxCount > 0){
-                               topNum += "." + n;
-                         }
-                    }
-                    if(maxCount > 0){
-                          results.push(`${topNum}(${target})`);
-                    }else{
-                          results.push(`無(${target})`);
-                    }
-        });
-        document.write(results.join(", "));
+function Top(nums) {
+    if (typeof aaa === 'undefined') return;
+
+    // 確保 nums 是陣列
+    let qs = Array.isArray(nums) ? nums : [nums];
+    let results = [];
+    
+    qs.forEach(q => {
+        let target = q.toString().padStart(2, '0');
+        let stats = {};
+        
+        // 1. 初始化 01-39
+        for(let n=1; n<=39; n++) stats[n.toString().padStart(2, '0')] = 0;
+        
+        // 2. 掃描歷史紀錄
+        for(let i = 1; i < aaa.length; i++){
+            if(aaa[i][1].includes(target)){
+                aaa[i-1][1].forEach(num => { 
+                    if(stats[num] !== undefined) stats[num]++; 
+                });
+            }
+        }
+
+        // 3. 找出最高次數與對應號碼
+        let maxCount = -1;
+        let topNum = "";
+        for(let n in stats){
+            if(stats[n] > maxCount){
+                maxCount = stats[n];
+                topNum = n;
+            } else if(stats[n] === maxCount && maxCount > 0){
+                topNum += "." + n; // 若有並列第一，用點隔開
+            }
+        }
+
+        // 4. 格式化結果：號碼(最高次數) -> 例如 12(105)
+        if(maxCount > 0){
+            // 這裡改成：最強號碼(最高次數)[來自哪個號碼]
+            results.push(`${topNum}(${maxCount})`);
+        } else {
+            results.push(`無(0)`);
+        }
+    });
+
+    // 5. 直接印出結果
+    document.write(results.join(", "));
 }
-function TT(x){
-       var xz= Array(40).fill(0);
-       aaa.slice(0, x).map(r =>r[1].map(n => xz[Number(n)]++));
-       return xz.slice(1,40);
-}
+
