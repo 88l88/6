@@ -5850,7 +5850,7 @@ function one(nums) {
     var targets = Array.isArray(nums) ? nums : [nums];
     
     targets.forEach(function(target) {
-        // 1. 歸零 01-39
+        // 1. 歸零計數器
         var counts = {};
         for (var j = 1; j <= 39; j++) {
             counts[j.toString().padStart(2, '0')] = 0;
@@ -5862,10 +5862,21 @@ function one(nums) {
                 aaa[i-1][1].forEach(function(n) { counts[n]++; });
             }
         }
+
+        // 3. 找出這組裡面的「最高次數」
+        var maxVal = 0;
         for (var k = 1; k <= 39; k++) {
             var key = k.toString().padStart(2, '0');
-           document.write(k<39?counts[key]+",":counts[key]+"<br>");
+            if (counts[key] > maxVal) maxVal = counts[key];
         }
+
+        // 4. 印出結果：次數1, 次數2... (最高次數)
+        document.write("號碼 " + target + "：");
+        for (var k = 1; k <= 39; k++) {
+            var key = k.toString().padStart(2, '0');
+            document.write(counts[key] + ", ");
+        }
+        document.write("<b>(" + maxVal + ")</b><br><br>"); // 最高次數括弧起來
     });
 }
 function Top(nums) {
