@@ -5846,7 +5846,28 @@ var aaa=[
 ["2007-01-01(一)",["09","11","27","28","38"],"096001",["27","38","09","11","28"]]
 ];
 
+function one(nums) {
+    var targets = Array.isArray(nums) ? nums : [nums];
+    
+    targets.forEach(function(target) {
+        // 1. 歸零 01-39
+        var counts = {};
+        for (var j = 1; j <= 39; j++) {
+            counts[j.toString().padStart(2, '0')] = 0;
+        }
 
+        // 2. 算次數
+        for (var i = aaa.length - 1; i > 0; i--) {
+            if (aaa[i][1].includes(target)) {
+                aaa[i-1][1].forEach(function(n) { counts[n]++; });
+            }
+        }
+        for (var k = 1; k <= 39; k++) {
+            var key = k.toString().padStart(2, '0');
+           document.write(k<39?counts[key]+",":counts[key]+"<br>");
+        }
+    });
+}
 function Top(q1,q2,q3,q4,q5){
         if (typeof aaa === 'undefined') return;
         qs = [q1, q2, q3, q4, q5];
