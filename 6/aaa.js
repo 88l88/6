@@ -5902,15 +5902,18 @@ function one(nums) {
         }
 
         // 印出 01-39，最高次數標註括弧
-        document.write("號碼 " + target + "：");
+         document.write( target + "：");
+         var html="";
         for (var k = 1; k <= 39; k++) {
+            var q="";
             var key = k.toString().padStart(2, '0');
             var currentVal = counts[key];
             if (currentVal === maxVal && maxVal > 0) {
-                document.write("<b>(" + currentVal + ")</b>, ");
+                 document.write("(" + currentVal + ")" + q );
             } else {
-                document.write(currentVal + ", ");
+                 document.write(currentVal + q);
             }
+           if(k<39) document.write(q+=",");
         }
         document.write("<br><br>");
     });
