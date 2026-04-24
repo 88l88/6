@@ -5847,10 +5847,9 @@ var aaa=[
 ];
 
 // 1. Top 函式：輸入陣列，顯示 (最高號碼)(開獎號碼)
+// 1. Top 函式：最高號碼(開獎號碼)
 function Top(nums) {
     if (typeof aaa === 'undefined') return;
-    
-    // 寫成 [] 格式
     let qs = Array.isArray(nums) ? nums : [nums];
     let results = [];
 
@@ -5875,18 +5874,13 @@ function Top(nums) {
                 topNum += "." + n;
             }
         }
-
-        if(maxCount > 0){
-            // 格式：最高次數之號碼(開獎號碼)
-            results.push(`${topNum}(${target})`);
-        } else {
-            results.push(`無(${target})`);
-        }
+        // 格式：最高號碼(開獎號碼)
+        results.push(`${topNum}(${target})`);
     });
     document.write(results.join(", "));
 }
 
-// 2. one 函式：輸入陣列，次數最高者加括弧
+// 2. one 函式：列表顯示，最高次數加括弧
 function one(nums) {
     let targets = Array.isArray(nums) ? nums : [nums];
     
@@ -5907,7 +5901,7 @@ function one(nums) {
             if (v > maxVal) maxVal = v;
         }
 
-        // 印出 01-39，最高次數加括弧
+        // 印出 01-39，最高次數標註括弧
         document.write("號碼 " + target + "：");
         for (var k = 1; k <= 39; k++) {
             var key = k.toString().padStart(2, '0');
