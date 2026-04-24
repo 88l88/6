@@ -5846,63 +5846,25 @@ var aaa=[
 ["2007-01-01(一)",["09","11","27","28","38"],"096001",["27","38","09","11","28"]]
 ];
 
-function one(nums) {
-    var targets = Array.isArray(nums) ? nums : [nums];
-    
-    targets.forEach(function(target) {
-        // 1. 歸零計數器
-        var counts = {};
-        for (var j = 1; j <= 39; j++) {
-            counts[j.toString().padStart(2, '0')] = 0;
-        }
-
-        // 2. 算次數
-        for (var i = aaa.length - 1; i > 0; i--) {
-            if (aaa[i][1].includes(target)) {
-                aaa[i-1][1].forEach(function(n) { counts[n]++; });
-            }
-        }
-
-        // 3. 找出這組裡面的「最高次數」
-        var maxVal = 0;
-        for (var k = 1; k <= 39; k++) {
-            var key = k.toString().padStart(2, '0');
-            if (counts[key] > maxVal) maxVal = counts[key];
-        }
-
-        // 4. 印出結果：次數1, 次數2... (最高次數)
-        document.write("號碼 " + target + "：");
-        for (var k = 1; k <= 39; k++) {
-            var key = k.toString().padStart(2, '0');
-            document.write(counts[key] + ", ");
-        }
-        document.write("<b>(" + maxVal + ")</b><br><br>"); // 最高次數括弧起來
-    });
-}
+// 1. Top 函式：輸入陣列，顯示 (最高號碼)(開獎號碼)
 function Top(nums) {
     if (typeof aaa === 'undefined') return;
-
-    // 確保 nums 是陣列
+    
+    // 寫成 [] 格式
     let qs = Array.isArray(nums) ? nums : [nums];
     let results = [];
-    
+
     qs.forEach(q => {
         let target = q.toString().padStart(2, '0');
         let stats = {};
-        
-        // 1. 初始化 01-39
         for(let n=1; n<=39; n++) stats[n.toString().padStart(2, '0')] = 0;
-        
-        // 2. 掃描歷史紀錄
+
         for(let i = 1; i < aaa.length; i++){
             if(aaa[i][1].includes(target)){
-                aaa[i-1][1].forEach(num => { 
-                    if(stats[num] !== undefined) stats[num]++; 
-                });
+                aaa[i-1][1].forEach(num => { if(stats[num] !== undefined) stats[num]++; });
             }
         }
 
-        // 3. 找出最高次數與對應號碼
         let maxCount = -1;
         let topNum = "";
         for(let n in stats){
@@ -5910,21 +5872,54 @@ function Top(nums) {
                 maxCount = stats[n];
                 topNum = n;
             } else if(stats[n] === maxCount && maxCount > 0){
-                topNum += "." + n; // 若有並列第一，用點隔開
+                topNum += "." + n;
             }
         }
 
-        // 4. 格式化結果：號碼(最高次數) -> 例如 12(105)
         if(maxCount > 0){
-            // 這裡改成：最強號碼(最高次數)[來自哪個號碼]
-            results.push(`${topNum}(${maxCount})`);
+            // 格式：最高次數之號碼(開獎號碼)
+            results.push(`${topNum}(${target})`);
         } else {
-            results.push(`無(0)`);
+            results.push(`無(${target})`);
         }
     });
-
-    // 5. 直接印出結果
     document.write(results.join(", "));
+}
+
+// 2. one 函式：輸入陣列，次數最高者加括弧
+function one(nums) {
+    let targets = Array.isArray(nums) ? nums : [nums];
+    
+    targets.forEach(function(target) {
+        var counts = {};
+        for (var j = 1; j <= 39; j++) counts[j.toString().padStart(2, '0')] = 0;
+
+        for (var i = aaa.length - 1; i > 0; i--) {
+            if (aaa[i][1].includes(target)) {
+                aaa[i-1][1].forEach(function(n) { counts[n]++; });
+            }
+        }
+
+        // 找最高次數
+        var maxVal = 0;
+        for (var k = 1; k <= 39; k++) {
+            var v = counts[k.toString().padStart(2, '0')];
+            if (v > maxVal) maxVal = v;
+        }
+
+        // 印出 01-39，最高次數加括弧
+        document.write("號碼 " + target + "：");
+        for (var k = 1; k <= 39; k++) {
+            var key = k.toString().padStart(2, '0');
+            var currentVal = counts[key];
+            if (currentVal === maxVal && maxVal > 0) {
+                document.write("<b>(" + currentVal + ")</b>, ");
+            } else {
+                document.write(currentVal + ", ");
+            }
+        }
+        document.write("<br><br>");
+    });
 }
 function TT(x){
        var xz= Array(40).fill(0);
